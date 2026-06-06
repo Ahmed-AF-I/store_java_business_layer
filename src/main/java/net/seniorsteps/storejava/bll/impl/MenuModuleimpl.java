@@ -46,7 +46,6 @@ public class MenuModuleimpl implements MenuModule {
     public void deleteCategories(Category category) throws Exception {
         try (EntityManager entityManager = HibernateUtil.getEntityManager()) {
             entityManager.getTransaction().begin();
-            // يجب عمل merge للتأكد من أن الكائن managed قبل الحذف
             Category toDelete = entityManager.merge(category);
             entityManager.remove(toDelete);
             entityManager.getTransaction().commit();
@@ -70,8 +69,7 @@ public class MenuModuleimpl implements MenuModule {
     @Override
     public Category findCategories(Category category) throws Exception {
         try (EntityManager entityManager = HibernateUtil.getEntityManager()) {
-            // البحث باستخدام المعرف (ID) الخاص بالكائن الممرر
-            return entityManager.find(Category.class, category.getId());
+        return entityManager.find(Category.class, category.getId());
         }
     }
 
